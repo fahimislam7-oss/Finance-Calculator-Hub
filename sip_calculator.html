@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator - Finance Calculator Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <h1>Mutual Fund SIP Calculator</h1>
+            <p>Calculate future returns on your monthly investments.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="calc-card">
+            <div class="form-group">
+                <label for="investment">Monthly Investment (₹):</label>
+                <input type="number" id="investment" placeholder="e.g. 5000">
+            </div>
+            <div class="form-group">
+                <label for="rate">Expected Annual Return Rate (%):</label>
+                <input type="number" id="rate" placeholder="e.g. 12" step="0.1">
+            </div>
+            <div class="form-group">
+                <label for="years">Time Period (Years):</label>
+                <input type="number" id="years" placeholder="e.g. 10">
+            </div>
+            <button class="calc-btn" onclick="calculateSIP()">Calculate SIP</button>
+            
+            <div class="result-box" id="sipResult" style="display: none;">
+                <h4>Calculation Result:</h4>
+                <p id="sipOutput"></p>
+            </div>
+            
+            <a href="index.html" class="back-btn">&larr; Back to Home</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Finance Calculator Hub</p>
+    </footer>
+
+    <script>
+        function calculateSIP() {
+            let p = parseFloat(document.getElementById('investment').value);
+            let annualRate = parseFloat(document.getElementById('rate').value);
+            let years = parseFloat(document.getElementById('years').value);
+
+            if(isNaN(p) || isNaN(annualRate) || isNaN(years)) {
+                alert("Please fill in all fields correctly.");
+                return;
+            }
+
+            let i = annualRate / 12 / 100;
+            let n = years * 12;
+            let maturityValue = p * ((Math.pow(1 + i, n) - 1) / i) * (1 + i);
+            let investedAmount = p * n;
+            let estimatedReturns = maturityValue - investedAmount;
+
+            document.getElementById('sipOutput').innerHTML = 
+                `Invested Amount: <strong>₹ ${investedAmount.toFixed(2)}</strong><br>` +
+                `Estimated Returns: <strong>₹ ${estimatedReturns.toFixed(2)}</strong><br>` +
+                `Total Value: <strong>₹ ${maturityValue.toFixed(2)}</strong>`;
+            document.getElementById('sipResult').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
