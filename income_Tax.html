@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income Tax Calculator - Finance Calculator Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <h1>Income Tax Calculator</h1>
+            <p>Estimate your tax liability based on standard income slabs.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="calc-card">
+            <div class="form-group">
+                <label for="income">Annual Taxable Income (₹):</label>
+                <input type="number" id="income" placeholder="e.g. 850000">
+            </div>
+            <button class="calc-btn" onclick="calculateTax()">Calculate Tax</button>
+            
+            <div class="result-box" id="taxResult" style="display: none;">
+                <h4>Calculation Result:</h4>
+                <p id="taxOutput"></p>
+            </div>
+            
+            <a href="index.html" class="back-btn">&larr; Back to Home</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Finance Calculator Hub</p>
+    </footer>
+
+    <script>
+        function calculateTax() {
+            let income = parseFloat(document.getElementById('income').value);
+            let tax = 0;
+            if(isNaN(income) || income < 0) {
+                alert("Please enter a valid income amount.");
+                return;
+            }
+            if (income <= 700000) {
+                tax = 0;
+            } else if (income <= 1000000) {
+                tax = (income - 700000) * 0.10;
+            } else if (income <= 1200000) {
+                tax = 30000 + (income - 1000000) * 0.15;
+            } else if (income <= 1500000) {
+                tax = 60000 + (income - 1200000) * 0.20;
+            } else {
+                tax = 120000 + (income - 1500000) * 0.30;
+            }
+            document.getElementById('taxOutput').innerHTML = `Estimated Tax Payable: <strong>₹ ${tax.toFixed(2)}</strong>`;
+            document.getElementById('taxResult').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
